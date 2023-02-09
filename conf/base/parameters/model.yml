@@ -1,0 +1,12 @@
+model_perf_metric: accuracy
+
+variables_combiner:
+  max_comb: 2
+  max_colinearity: 0.7
+
+n_folds: 2 # todo remove
+
+genetic_optim:
+  population_size: 10
+  population_decay: 0.8
+  max_generation: 20

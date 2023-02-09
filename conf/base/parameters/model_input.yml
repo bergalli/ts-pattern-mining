@@ -1,0 +1,21 @@
+
+make_sequences:
+  timesteps: 13 # shifting max periods
+  three_dims: True
+  to_disjoint_sequences: True
+
+
+ttv_split:
+  test_size: 0.2
+  valid_size: 0.1
+
+  n_folds: 3
+
+target:
+  agg_fun: # used in make_sequences to average values (and in timesteps reindex?)
+    fun_name: nanmean
+    partial_params: { }
+  columns:
+    - close
+
+

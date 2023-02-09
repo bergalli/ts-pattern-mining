@@ -1,0 +1,51 @@
+[tool.kedro]
+package_name = "midas_ai"
+project_name = "Midas"
+project_version = "0.18.3"
+
+[tool.isort]
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+use_parentheses = true
+line_length = 88
+known_third_party = "kedro"
+
+[tool.pytest.ini_options]
+addopts = """
+--cov-report term-missing \
+--cov src/midas_forecaster -ra"""
+
+[tool.coverage.report]
+fail_under = 0
+show_missing = true
+exclude_lines = ["pragma: no cover", "raise NotImplementedError"]
+
+[tool.poetry]
+name = "midas"
+version = "0.1.0"
+description = ""
+authors = ["bertrand <bertrand.gallice.pro@gmail.com>"]
+
+[tool.poetry.dependencies]
+python =  ">=3.9,<3.11"
+numpy = "^1.23.4"
+pandas = "^1.5.0"
+dask = "^2021.10.0"
+TA-Lib = "^0.4.25"
+kedro = {extras = ["pandas"], version = "==0.18.3"}
+ray = {extras = ["tune"], version = "^2.0.0"}
+xarray = "^2022.10.0"
+scikit-learn = "^1.1.2"
+statsmodels = "^0.13.2"
+stumpy = "^1.11.1"
+mlflow = "^1.29.0"
+jax = {extras = ["cpu"], version = "^0.3.23"}
+omegaconf = "^2.2.3"
+pydantic = "^1.10.2"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

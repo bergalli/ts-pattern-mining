@@ -1,0 +1,13 @@
+dask==2022.3.0
+flatten_dict==0.4.2
+hydra-core==1.1.1
+joblib==1.1.0
+kedro==0.17.7
+lightgbm==3.3.2
+numpy==1.22.3
+omegaconf==2.1.1
+optuna==2.10.0
+pandas==1.4.1
+pytest==7.1.1
+setuptools==58.0.4
+TA_Lib==0.4.24

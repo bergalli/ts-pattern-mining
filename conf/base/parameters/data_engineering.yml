@@ -1,0 +1,21 @@
+technical_indicators_variations:
+  simple_moving_average:
+    timeperiods:
+      - 3
+      - 5
+      - 10
+      - 15
+      - 30
+      - 60
+    metrics:
+      - close
+      - volume
+  average_true_range:
+    timeperiods:
+      - 120
+      - 640
+      - 2080
+
+stumpy_compute: null
+
+min_col_volume: 30

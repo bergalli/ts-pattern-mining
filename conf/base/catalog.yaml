@@ -1,0 +1,9 @@
+
+daily_crypto_currencies:
+  type: PartitionedDataSet
+  dataset:
+    type: pandas.ParquetDataSet
+  path: data/01_raw/binance_postproc/spot/daily/klines/
+  filename_suffix: '.parquet'
+
+

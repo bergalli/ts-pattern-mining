@@ -1,0 +1,47 @@
+data_split_rules:
+  start_date:
+    operator: gt
+    value: 2013-01-01
+    value_type: date
+    keep_na: True
+  end_date:
+    operator: lt
+    value: 2099-01-01
+    value_type: date
+    keep_na: True
+  quote_asset: # assets to use as quotation
+    operator: isin
+    value:
+      - EUR
+  base_asset: # assets to use as base
+    operator: isin
+    value:
+      - ETH
+      - LTC
+
+regex_colnames:
+  - ^timestamp
+  - ^symbol
+  - ^base_asset
+  - ^quote_asset
+  - ^open
+  - ^high
+  - ^low
+  - ^close
+  - ^volume
+
+index_cols:
+  - timestamp
+  - symbol
+  - result_metric_name
+
+
+split_on_labels:
+  index_column: timestamp
+  labels_column: symbol
+  values_columns:
+    - open
+    - close
+    - high
+    - low
+    - volume

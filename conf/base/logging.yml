@@ -1,0 +1,17 @@
+version: 1
+
+disable_existing_loggers: False
+
+handlers:
+  rich:
+    class: rich.logging.RichHandler
+
+loggers:
+  kedro:
+    level: INFO
+    anyconfig:
+        level: INFO  # change
+        handlers: [console, info_file_handler, error_file_handler]
+        propagate: no
+root:
+  handlers: [rich]
