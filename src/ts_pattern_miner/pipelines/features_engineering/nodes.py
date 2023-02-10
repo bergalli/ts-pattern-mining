@@ -1,5 +1,8 @@
-from typing import List
+from typing import List, Tuple
 
+import dask.array as da
+import numpy as np
+import ray
 import xarray as xr
 
 from ts_pattern_miner.utils import _stack_vectors_columns
@@ -15,7 +18,7 @@ def get_symbols_technical_indicators(
     symbols_xarray: xr.Dataset,
     ti_conf,
     dask_chunk_size,
-) -> List[xr.Dataset]:
+) -> xr.Dataset:
     all_symbols_indicators = [symbols_xarray]
     for ti_name, ti_params in ti_conf.items():
         generate_ti_fun = TI_GEN_FUNS[ti_name]
@@ -36,6 +39,44 @@ def get_symbols_technical_indicators(
     features_xr = xr.merge(all_symbols_indicators)
     features_xr = features_xr.persist()
     return features_xr
+
+
+def shift_features(features_xr: xr.Dataset, shift_interval: Tuple[int, int]) -> xr.Dataset:
+    def shift_array(xr_df: xr.Dataset, period: int, fill_value=np.NaN) -> xr.Dataset:
+        """
+        Convert roll the data
+        """
+        shifted_data_vars = {}
+        for symbol, dv in xr_df.data_vars.items():
+            rolled = da.roll(dv.data, period, axis=0)
+
+            if period < 0:
+                rolled[period:, ::] = fill_value
+            elif period > 0:
+                rolled[:period, ::] = fill_value
+
+            shifted_data_vars.update({symbol: (["timestamp", "metric"], rolled)})
+        shifted_array_xr = xr.Dataset(data_vars=shifted_data_vars, coords=xr_df.coords)
+
+        return shifted_array_xr
+
+    features_shifts_xr = {
+        period: shift_array(features_xr, period)
+        for period in range(shift_interval[0], shift_interval[1])
+    }
+    # create new dimension "shift"
+    features_shifts_xr = [
+        arr.expand_dims("shift").assign_coords(dict(shift=[shift_id]))
+        for shift_id, arr in features_shifts_xr.items()
+    ]
+    features_shifts_xr = xr.concat(features_shifts_xr, dim="shift")
+
+    features_shifts_xr = features_shifts_xr.transpose("timestamp", "shift", "metric")
+
+    features_shifts_xr.persist()
+
+    return features_shifts_xr
+
 
 def select_targets_columns(symbols_xarray: xr.Dataset, target_metrics: List[str]) -> xr.Dataset:
     """

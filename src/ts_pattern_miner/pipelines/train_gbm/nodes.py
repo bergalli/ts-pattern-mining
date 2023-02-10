@@ -9,10 +9,10 @@ import random
 
 
 def convert_xarray_to_dask(features_array: xr.Dataset, targets_array: xr.Dataset)-> Tuple[dd.DataFrame, dd.DataFrame]:
-    X = features_array.to_array("symbol").stack(dict(columns=["symbol", "metric"])).rename("X")
+    X = features_array.to_array("symbol").stack(dict(columns=["shift", "symbol", "metric"])).rename("X")
     Y = targets_array.to_array("symbol").stack(dict(columns=["symbol", "metric"])).rename("Y")
 
-    columns_X = ["__".join(keys) for keys in X.columns.data]
+    columns_X = ["__".join((str(k) for k in keys)) for keys in X.columns.data]
     X = dd.from_dask_array(
         X.data,
         meta=pd.DataFrame(
@@ -21,7 +21,7 @@ def convert_xarray_to_dask(features_array: xr.Dataset, targets_array: xr.Dataset
         ),
         columns=columns_X,
     )
-    columns_Y = ["__".join(keys)+"_target" for keys in Y.columns.data]
+    columns_Y = ["__".join((str(k) for k in keys))+"_target" for keys in Y.columns.data]
     Y = dd.from_dask_array(
         Y.data,
         meta=pd.DataFrame(
@@ -37,7 +37,8 @@ def make_train_test_val_datasets(X, Y):
     train_datasets = {}
     for symbol_target in Y.columns:
         train_datasets[symbol_target] = ray.data.from_dask(
-            dd.merge(X, Y[symbol_target], left_index=True, right_index=True)
+            dd.concat([X, Y[symbol_target]], axis=1)
+            #TODO dd.merge(X, Y[symbol_target], left_index=True, right_index=True)
         )
     return train_datasets, train_datasets, train_datasets
 

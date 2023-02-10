@@ -1,0 +1,21 @@
+shift_interval:
+  - 10
+  - 15
+
+ti:
+  sma:
+    timeperiods:
+      - 3
+      - 5
+      - 10
+      - 15
+      - 30
+      - 60
+    metrics:
+      - close
+      - volume
+  atr:
+    timeperiods:
+      - 120
+      - 640
+      - 2080
