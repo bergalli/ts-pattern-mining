@@ -1,23 +1,26 @@
 data_split_rules:
-  start_date:
-    operator: gt
-    value: 2013-01-01
-    value_type: date
-    keep_na: True
-  end_date:
-    operator: lt
-    value: 2099-01-01
-    value_type: date
-    keep_na: True
-  quote_asset: # assets to use as quotation
-    operator: isin
-    value:
-      - EUR
-  base_asset: # assets to use as base
-    operator: isin
-    value:
-      - ETH
-      - LTC
+    - col: timestamp_close
+      operator: gt
+      value: 2013-01-01
+      conversion: date2datetime
+      keep_na: True
+    - col: timestamp_close
+      operator: lt
+      value: 2099-01-01
+      conversion: date2datetime
+      keep_na: True
+    - col: quote_asset # assets to use as quotation
+      operator: isin
+      value:
+        - EUR
+    - col: base_asset # assets to use as base
+      operator: isin
+      value:
+        - ETH
+        - LTC
+
+
+timestamp_column: timestamp_close
 
 regex_colnames:
   - ^timestamp
@@ -31,12 +34,13 @@ regex_colnames:
   - ^volume
 
 index_cols:
-  - timestamp
-  - symbol
-  - result_metric_name
+  - timestamp_close
+#  - timestamp
+#  - symbol
+#  - result_metric_name
 
 
-split_on_labels:
+pivot_symbols:
   index_column: timestamp
   labels_column: symbol
   values_columns:
@@ -45,3 +49,21 @@ split_on_labels:
     - high
     - low
     - volume
+
+ti:
+  sma:
+    timeperiods:
+      - 3
+      - 5
+      - 10
+      - 15
+      - 30
+      - 60
+    metrics:
+      - close
+      - volume
+  atr:
+    timeperiods:
+      - 120
+      - 640
+      - 2080

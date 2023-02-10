@@ -7,8 +7,8 @@ from .distribute_talib import simple_moving_average_dask, average_true_range_das
 
 
 def generate_sma_dask_arrays(metrics_xarray: xr.Dataset, sma_params) -> Tuple[List[da.Array], dict]:
-    timeperiods = sma_params.timeperiods
-    metrics = sma_params.metrics
+    timeperiods = sma_params["timeperiods"]
+    metrics = sma_params["metrics"]
 
     coords = dict(timestamp=metrics_xarray.timestamp.data, metric=[])
     sma_dask_arrays = []
@@ -27,7 +27,7 @@ def generate_sma_dask_arrays(metrics_xarray: xr.Dataset, sma_params) -> Tuple[Li
 
 
 def generate_atr_dask_arrays(metrics_xarray: xr.Dataset, atr_params) -> Tuple[List[da.Array], dict]:
-    timeperiods = atr_params.timeperiods
+    timeperiods = atr_params["timeperiods"]
 
     hlc_xarray = metrics_xarray.loc[dict(metric=["high", "low", "close"])]
     coords = dict(timestamp=metrics_xarray.timestamp.data, metric=[])

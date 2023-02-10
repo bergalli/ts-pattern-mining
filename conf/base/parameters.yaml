@@ -1,5 +1,5 @@
 dask:
-  chunk_size: 8192
+  chunksize: 8192
 
 run_uuid: null
 

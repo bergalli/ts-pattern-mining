@@ -10,13 +10,6 @@ from .nodes.train import (
 def create_pipeline() -> Pipeline:
     return pipeline(
         [
-            # node(
-            #     model_factory,
-            #     inputs=dict(model_name="params:model_run.run_model.name",
-            #                 prediction_type="params:data_transformations.targets_engineering.prediction_type",
-            #                 init_params="params:model_run.run_model.hyperparams"),
-            #     outputs="model_instance"
-            # ),
             node(
                 convert_datasets_to_arrays,
                 inputs=dict(features_ttv_array="features_ttv_array",

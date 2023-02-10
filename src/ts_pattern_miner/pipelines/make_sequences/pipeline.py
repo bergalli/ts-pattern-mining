@@ -15,7 +15,7 @@ def create_pipeline(**kwargs) -> Pipeline:
                 shift_features,
                 inputs=dict(features_xr="features_xr",
                             timesteps="params:make_sequences.timesteps",
-                            dask_chunk_size="params:dask.chunk_size"),
+                            dask_chunk_size="params:dask.chunksize"),
                 outputs="shifted_features_xr"
             ),
             node(

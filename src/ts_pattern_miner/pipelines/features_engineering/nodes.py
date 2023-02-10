@@ -3,7 +3,10 @@ from typing import List
 import xarray as xr
 
 from ts_pattern_miner.utils import _stack_vectors_columns
-from ts_pattern_miner.pipelines.data_engineering.technical_indicators.dask_talib.ti_generators import generate_atr_dask_arrays, generate_sma_dask_arrays
+from .dask_talib.ti_generators import (
+    generate_atr_dask_arrays,
+    generate_sma_dask_arrays,
+)
 
 TI_GEN_FUNS = {"sma": generate_sma_dask_arrays, "atr": generate_atr_dask_arrays}
 
@@ -13,7 +16,7 @@ def get_symbols_technical_indicators(
     ti_conf,
     dask_chunk_size,
 ) -> List[xr.Dataset]:
-    all_symbols_indicators = []
+    all_symbols_indicators = [symbols_xarray]
     for ti_name, ti_params in ti_conf.items():
         generate_ti_fun = TI_GEN_FUNS[ti_name]
 
@@ -29,20 +32,22 @@ def get_symbols_technical_indicators(
 
             symbols_indicator.append(symbol_ti_xarray)
         all_symbols_indicators += symbols_indicator
-    return all_symbols_indicators
 
-
-def combine_features_into_dataframe(
-    symbols_xarray: xr.Dataset,
-    all_symbols_ti_arrays: List[xr.Dataset],
-) -> xr.Dataset:
-    features_xr = xr.merge([symbols_xarray] + all_symbols_ti_arrays)
-
-    assert all(
-        len(idx) == len(set(idx)) for idx in features_xr.indexes.values()
-    ), "Some coordinates are duplicated in the final features_df"  # , cannot pivot."
-
-    # noinspection PyTypeChecker
+    features_xr = xr.merge(all_symbols_indicators)
     features_xr = features_xr.persist()
-
     return features_xr
+
+def select_targets_columns(symbols_xarray: xr.Dataset, target_metrics: List[str]) -> xr.Dataset:
+    """
+    Same operation as node combine_features_into_dataframe()
+    Args:
+        symbols_xarray:
+        target_metrics:
+
+    Returns:
+
+    """
+    targets_xr = symbols_xarray.loc[dict(metric=target_metrics)]
+    # targets_xr = targets_xr.assign_coords(dict(role=["target"]))
+
+    return targets_xr

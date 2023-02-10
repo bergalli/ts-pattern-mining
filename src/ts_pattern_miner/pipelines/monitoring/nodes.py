@@ -8,8 +8,10 @@ import mlflow.tracking
 def create_mlflow_metadata(data_split_rules) -> Tuple[str, dict]:
     experiment_name = os.environ.get("MLFLOW_EXPERIMENT_NAME", "exp_name_undefined")
     experiment_tags = {}
-    for column_name, filter_rule in data_split_rules.items():
-        experiment_tags[column_name] = f'{str(filter_rule["operator"])}_{str(filter_rule["value"]).replace("-", "_")}'
+    for filter_rule in data_split_rules:
+        experiment_tags[
+            filter_rule["col"]
+        ] = f'{str(filter_rule["operator"])}_{str(filter_rule["value"]).replace("-", "_")}'
     return experiment_name, experiment_tags
 
 
@@ -52,5 +54,6 @@ def check_volumes(df):
         .reset_index()
     )
 
-    df[["industry_name", "brand_name"]].drop_duplicates().sort_values(["industry_name", "brand_name"])
-
+    df[["industry_name", "brand_name"]].drop_duplicates().sort_values(
+        ["industry_name", "brand_name"]
+    )
