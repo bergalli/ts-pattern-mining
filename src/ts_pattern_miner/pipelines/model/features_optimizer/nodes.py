@@ -5,8 +5,8 @@ import pandas as pd
 import statsmodels.api as sm
 from ray.tune import ExperimentAnalysis
 
-from midas_ai.features.data_store import DataStore
-from midas_ai.models.classification import ClassificationStatsmodels
+from ts_pattern_miner.features.data_store import DataStore
+from ts_pattern_miner.models.classification import ClassificationStatsmodels
 
 logger = logging.getLogger("kedro")
 

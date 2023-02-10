@@ -2,8 +2,8 @@ from typing import List
 
 import xarray as xr
 
-from midas_ai.utils import _stack_vectors_columns
-from midas_ai.pipelines.data_engineering.technical_indicators.dask_talib.ti_generators import generate_atr_dask_arrays, generate_sma_dask_arrays
+from ts_pattern_miner.utils import _stack_vectors_columns
+from ts_pattern_miner.pipelines.data_engineering.technical_indicators.dask_talib.ti_generators import generate_atr_dask_arrays, generate_sma_dask_arrays
 
 TI_GEN_FUNS = {"sma": generate_sma_dask_arrays, "atr": generate_atr_dask_arrays}
 

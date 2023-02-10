@@ -7,7 +7,7 @@ import re
 
 import pandas as pd
 
-from midas_ai.exceptions import DataRelatedError
+from ts_pattern_miner.exceptions import DataRelatedError
 
 
 def isin(series: pd.Series, value: List) -> pd.Series:

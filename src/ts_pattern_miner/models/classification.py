@@ -1,7 +1,7 @@
 import pandas as pd
 from sklearn.metrics import accuracy_score, f1_score, roc_auc_score
 
-from midas_ai.models.base import RayModelOptimizer
+from ts_pattern_miner.models.base import RayModelOptimizer
 
 
 class ClassificationStatsmodels(RayModelOptimizer):

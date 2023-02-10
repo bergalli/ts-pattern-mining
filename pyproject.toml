@@ -1,6 +1,6 @@
 [tool.kedro]
-package_name = "midas_ai"
-project_name = "Midas"
+package_name = "ts_pattern_miner"
+project_name = "TS Pattern Miner"
 project_version = "0.18.3"
 
 [tool.isort]
@@ -14,7 +14,7 @@ known_third_party = "kedro"
 [tool.pytest.ini_options]
 addopts = """
 --cov-report term-missing \
---cov src/midas_forecaster -ra"""
+--cov src/ts_pattern_mining -ra"""
 
 [tool.coverage.report]
 fail_under = 0
@@ -22,7 +22,7 @@ show_missing = true
 exclude_lines = ["pragma: no cover", "raise NotImplementedError"]
 
 [tool.poetry]
-name = "midas"
+name = "ts-pattern-miner"
 version = "0.1.0"
 description = ""
 authors = ["bertrand <bertrand.gallice.pro@gmail.com>"]

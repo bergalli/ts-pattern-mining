@@ -1,7 +1,7 @@
 from flatten_dict import flatten
 from kedro.framework.hooks.manager import get_hook_manager
 from kedro.io import DataCatalog
-from midas_ai.hooks import ProjectHooks
+from ts_pattern_miner.hooks import ProjectHooks
 from omegaconf import DictConfig
 
 # A function decorated with hydra.main can only return None.

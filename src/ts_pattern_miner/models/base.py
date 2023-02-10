@@ -15,7 +15,7 @@ from ray.tune.schedulers import AsyncHyperBandScheduler
 # from ray.tune.search.dragonfly import DragonflySearch
 # from ray.tune.search.hebo import HEBOSearch
 # from ray.tune.search.flaml import BlendSearch
-from midas_ai.features.data_store import DataStore
+from ts_pattern_miner.features.data_store import DataStore
 
 logger = logging.getLogger(__name__)
 

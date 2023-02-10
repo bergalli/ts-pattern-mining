@@ -1,4 +1,4 @@
-"""Midas Forecaster
+"""TS Pattern Mining
 """
 global etl_client
 

@@ -1,6 +1,6 @@
 from kedro.pipeline import Pipeline, pipeline, node
 
-from midas_ai.pipelines.data_engineering.technical_indicators.nodes import (
+from ts_pattern_miner.pipelines.data_engineering.technical_indicators.nodes import (
     get_symbols_technical_indicators,
     combine_features_into_dataframe
 )

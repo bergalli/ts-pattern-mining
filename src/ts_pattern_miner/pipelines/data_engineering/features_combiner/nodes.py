@@ -1,6 +1,6 @@
 
 import pandas as pd
-from midas_ai.features.variables_combiner import VariablesCombiner
+from ts_pattern_miner.features.variables_combiner import VariablesCombiner
 
 
 def drop_columns_on_level_of_emptyness(df, extremities_full_or_empty: int = 1):

@@ -1,6 +1,4 @@
-"""Midas Forecaster file for ensuring the package is executable
-as `midas-ai-forecaster` and `python -m midas_forecaster`
-"""
+
 import importlib
 from pathlib import Path
 

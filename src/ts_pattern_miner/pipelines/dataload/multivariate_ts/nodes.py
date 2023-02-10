@@ -5,7 +5,7 @@ from functools import reduce
 
 import xarray as xr
 
-from midas_ai.utils import _stack_vectors_columns
+from ts_pattern_miner.utils import _stack_vectors_columns
 
 logger = logging.getLogger("kedro")
 
